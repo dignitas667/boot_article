@@ -15,15 +15,26 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Autowired
 	private ArticleDAO articleDAO;
-
-	/*
-	@Value("${pageSize}")
-	private int pageSize;
-	*/
-
+	
+	//@Value("${pageSize}")
+	private int pageSize = 10;
+	
 	@Override
 	public void insertArticle(ArticleDTO articleDTO) throws Exception {
 		articleDAO.insertArticle(articleDTO);
+	}
+	
+	@Override
+	public long getArticleCount() throws Exception {
+		return articleDAO.getArticleCount();
+	} 
+	
+	@Override
+	public List<ArticleDTO> getArticleListPage(long pg) throws Exception {
+		long startNum = (pg - 1) * pageSize + 1;
+		long endNum   = pg * pageSize;
+	
+		return articleDAO.getArticleListPage(startNum, endNum);
 	}
 	
 	/*
@@ -61,17 +72,8 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 	}
 
-	@Override
-	public List<ArticleDTO> getArticleListPage(long pg) throws Exception {
-		long startNum = (pg - 1) * pageSize + 1;
-		long endNum   = pg * pageSize;
 	
-		return articleDAO.getArticleListPage(startNum, endNum);
-	}
 	
-	@Override
-	public long getArticleCount() throws Exception {
-		return articleDAO.getArticleCount();
-	} */
+	*/
 }
 

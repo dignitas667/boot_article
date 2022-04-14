@@ -1,10 +1,14 @@
 package net.developia.boot_article.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,13 +23,13 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleService articleService;
-	/*
-	@Value("${pageSize}")
-	private long pageSize;
 	
-	@Value("${blockSize}")
-	private long blockSize;
-	*/
+	//@Value("${pageSize}")
+	private long pageSize = 10;
+	
+	//@Value("${blockSize}")
+	private long blockSize = 10;
+	
 	
 	@GetMapping("insert")
 	public String insertArticle() {
@@ -34,7 +38,7 @@ public class ArticleController {
 	
 	
 	@PostMapping("insert")
-	public String insertBoard(@ModelAttribute ArticleDTO articleDTO,
+	public String insertArticle(@ModelAttribute ArticleDTO articleDTO,
 		Model model) {
 		
 		log.info(articleDTO.toString());
@@ -48,17 +52,16 @@ public class ArticleController {
 		}
 	}
 	
-	/*
 	@GetMapping("/")
 	public String list(@PathVariable long pg, 
 		Model model) throws Exception {
 		
 		try {
-			long recordCount = boardService.getBoardCount();
+			long recordCount = articleService.getArticleCount();
 			long pageCount = recordCount / pageSize;
 			if (recordCount % pageSize != 0) pageCount++;
 			
-			List<BoardDTO> list = boardService.getBoardListPage(pg);
+			List<ArticleDTO> list = articleService.getArticleListPage(pg);
 
 			long startPage = (pg - 1)/blockSize*blockSize+1;
 			long endPage   = startPage + blockSize - 1;
@@ -71,11 +74,11 @@ public class ArticleController {
 			model.addAttribute("endPage", endPage);
 			model.addAttribute("recordCount", recordCount);
 			model.addAttribute("pageSize", pageSize);
-			return "board.list";
+			return "article/list";
 		} catch (Exception e) {
 			model.addAttribute("msg", "list 출력 에러");
 			model.addAttribute("url", "index");
 			return "result";
 		}
-	} */
+	}
 }

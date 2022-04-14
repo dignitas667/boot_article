@@ -7,6 +7,21 @@
 	VALUES(board_no_seq.nextval, #{title}, #{name}, #{password}, #{content})
 	</insert>
 	
+	<select id="getArticleCount" resultType="long">
+	SELECT count(*) as cnt 
+	FROM   board
+	</select>
+	
+	<select id="getArticleListPage" resultType="ArticleDTO">
+	SELECT B.*
+	FROM (SELECT  rownum AS rnum, A.*
+	      FROM	(SELECT no, title, name, regdate, readcount
+		         FROM   board
+	             ORDER  BY no DESC) A) B
+	WHERE rnum BETWEEN #{startNum} AND #{endNum}
+	</select>
+	
+	
 	<!-- 
 	<select id="getArticleList" resultType="ArticleDTO">
 	SELECT
@@ -18,15 +33,6 @@
 	FROM
 	    board
 	ORDER BY NO DESC
-	</select>
-	
-	<select id="getArticleListPage" parameterType="long" resultType="ArticleDTO">
-	SELECT B.*
-	FROM (SELECT  rownum AS rnum, A.*
-	      FROM	(SELECT no, title, name, regdate, readcount
-		         FROM   board
-	             ORDER  BY no DESC) A) B
-	WHERE rnum BETWEEN #{startNum} AND #{endNum}
 	</select>
 	
 	<select id="getDetail" parameterType="long" resultType="ArticleDTO">
@@ -60,8 +66,5 @@
 	WHERE  no=#{no} AND password=#{password}
 	</update>
 	
-	<select id="getArticleCount" resultType="long">
-	SELECT count(*) as cnt 
-	FROM   board
-	</select> -->
+	 -->
 </mapper>
