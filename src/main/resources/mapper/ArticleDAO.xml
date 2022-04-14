@@ -21,8 +21,6 @@
 	WHERE rnum BETWEEN #{startNum} AND #{endNum}
 	</select>
 	
-	
-	<!-- 
 	<select id="getArticleList" resultType="ArticleDTO">
 	SELECT
 	    NO,
@@ -65,6 +63,4 @@
 	       content=#{content}
 	WHERE  no=#{no} AND password=#{password}
 	</update>
-	
-	 -->
 </mapper>

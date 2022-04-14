@@ -24,11 +24,11 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 	
-	//@Value("${pageSize}")
-	private long pageSize = 10;
+	@Value("${pageSize}")
+	private long pageSize;
 	
-	//@Value("${blockSize}")
-	private long blockSize = 10;
+	@Value("${blockSize}")
+	private long blockSize;
 	
 	
 	@GetMapping("insert")

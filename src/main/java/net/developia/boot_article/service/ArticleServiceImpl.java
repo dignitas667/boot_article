@@ -2,7 +2,7 @@ package net.developia.boot_article.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.log4j.Log4j2;
@@ -13,34 +13,19 @@ import net.developia.boot_article.dto.ArticleDTO;
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
-	@Autowired
 	private ArticleDAO articleDAO;
-	
-	//@Value("${pageSize}")
-	private int pageSize = 10;
-	
+
+	@Value("${pageSize}")
+	private int pageSize;
+
+
+	public ArticleServiceImpl(ArticleDAO articleDAO) {
+		this.articleDAO = articleDAO;
+	}
+
 	@Override
 	public void insertArticle(ArticleDTO articleDTO) throws Exception {
 		articleDAO.insertArticle(articleDTO);
-	}
-	
-	@Override
-	public long getArticleCount() throws Exception {
-		return articleDAO.getArticleCount();
-	} 
-	
-	@Override
-	public List<ArticleDTO> getArticleListPage(long pg) throws Exception {
-		long startNum = (pg - 1) * pageSize + 1;
-		long endNum   = pg * pageSize;
-	
-		return articleDAO.getArticleListPage(startNum, endNum);
-	}
-	
-	/*
-	@Override
-	public List<ArticleDTO> getArticleList() throws Exception {
-		return articleDAO.getArticleList();
 	}
 	
 	@Override
@@ -72,8 +57,17 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 	}
 
+	@Override
+	public List<ArticleDTO> getArticleListPage(long pg) throws Exception {
+		long startNum = (pg - 1) * pageSize + 1;
+		long endNum   = pg * pageSize;
 	
+		return articleDAO.getArticleListPage(startNum, endNum);
+	}
 	
-	*/
+	@Override
+	public long getArticleCount() throws Exception {
+		return articleDAO.getArticleCount();
+	}
 }
 

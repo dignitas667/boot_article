@@ -19,21 +19,31 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<th>작성일</th>
 	<th>조회수</th>
 </tr>
-<tr th:each="dto: ${list}">
-	<td th:text="${dto.no}" />
-	<td><a th:href="@{./{no}/(no=${dto.no})}">[[${dto.title}]]</a></td>
+<tr th:each="dto,st: ${list}">
+	<td th:text="${recordCount - st.index}" />
+	<td><a th:href="@{ {no}/(no=${dto.no},vn=${recordCount - st.index})}">[[${dto.title}]]</a></td>
 	<td th:text="${dto.name}" />
 	<td th:text="${#calendars.format(dto.regdate, 'yyyy-MM-dd')}" /></td>
 	<td th:text="${dto.readcount}" />
 </tr>
 <tr>
 	<td colspan="5">
-		
-		<span th:each="p: ${#numbers.sequence(startPage,endPage)}">
-			<a th:href="@{../{p}/(p=${p})}">[[${p}]]</a>
+		<span th:if="${startPage != 1}">
+			[<a th:href="@{../{sp}/(sp=${startPage-1})}">이전블럭</a>]
 		</span>
 		
-		
+		<span th:each="p: ${#numbers.sequence(startPage,endPage)}">
+			<span th:if="${p != pg}">
+				<a th:href="@{../{p}/(p=${p})}">[[${p}]]</a>
+			</span>
+			<span th:if="${p == pg}">
+				[[${p}]]
+			</span>
+		</span>
+
+		<span th:if="${endPage != pageCount}">
+			[<a th:href="@{../{sp}/(sp=${endPage+1})}">다음블럭</a>]
+		</span>
 	</td>
 </tr>
 </table><br/>

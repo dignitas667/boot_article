@@ -11,5 +11,11 @@ public interface ArticleService {
 	long getArticleCount() throws Exception;
 
 	List<ArticleDTO> getArticleListPage(long pg) throws Exception;
+	
+	ArticleDTO getDetail(long no) throws Exception;
+
+	void deleteArticle(ArticleDTO articleDTO) throws Exception;
+
+	void updateArticle(ArticleDTO articleDTO) throws Exception;
 
 }
