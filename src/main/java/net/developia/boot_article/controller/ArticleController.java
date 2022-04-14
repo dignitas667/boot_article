@@ -1,28 +1,30 @@
 package net.developia.boot_article.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j2;
+import net.developia.boot_article.dto.ArticleDTO;
+import net.developia.boot_article.service.ArticleService;
 
 @Log4j2
 @Controller
 @RequestMapping("article/{pg}")
 public class ArticleController {
 
-	/*
+	@Autowired
 	private ArticleService articleService;
-	
+	/*
 	@Value("${pageSize}")
 	private long pageSize;
 	
 	@Value("${blockSize}")
 	private long blockSize;
-	
-	public ArticleController(ArticleService articleService) {
-		this.articleService = articleService;
-	}
 	*/
 	
 	@GetMapping("insert")
@@ -30,14 +32,14 @@ public class ArticleController {
 		return "article/insert";
 	}	
 	
-	/*
+	
 	@PostMapping("insert")
-	public String insertBoard(@ModelAttribute BoardDTO boardDTO,
+	public String insertBoard(@ModelAttribute ArticleDTO articleDTO,
 		Model model) {
 		
-		log.info(boardDTO.toString());
+		log.info(articleDTO.toString());
 		try {
-			boardService.insertBoard(boardDTO);
+			articleService.insertArticle(articleDTO);
 			return "redirect:../1/";
 		} catch (Exception e) {
 			model.addAttribute("msg", "입력 에러");
@@ -46,6 +48,7 @@ public class ArticleController {
 		}
 	}
 	
+	/*
 	@GetMapping("/")
 	public String list(@PathVariable long pg, 
 		Model model) throws Exception {
