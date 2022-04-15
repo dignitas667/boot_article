@@ -21,7 +21,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 </tr>
 <tr th:each="dto,st: ${list}">
 	<td th:text="${recordCount - st.index - ((pg - 1) * pageSize)}" />
-	<td><a th:href="@{ {no}/(no=${dto.no},vn=${recordCount - st.index - ((pg - 1) * pageSize)})}">[[${dto.title}]]</a></td>
+	<td><a th:href="@{ {no}/(no=${dto.no},vn=${recordCount - st.index - ((pg - 1) * pageSize)})}">
+		[[${dto.title}]]</a></td>
 	<td th:text="${dto.name}" />
 	<td th:text="${#calendars.format(dto.regdate, 'yyyy-MM-dd')}" /></td>
 	<td th:text="${dto.readcount}" />
@@ -33,7 +34,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 		</span>
 		
 		<span th:each="p: ${#numbers.sequence(startPage,endPage)}">
-			<span th:if="${p != pg}">
+			<span th:unless="${p == pg}">
 				<a th:href="@{../{p}/(p=${p})}">[[${p}]]</a>
 			</span>
 			<span th:if="${p == pg}">
